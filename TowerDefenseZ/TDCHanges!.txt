@@ -1,0 +1,28 @@
+  public Wave(float rate,bool shuffleBefore,int killNodes, EnemiesPerWave[] wave1)
+    {
+        if(wave1 != null)
+        {
+            Debug.Log("const");
+            this.rate = rate;
+            this.shuffleBefore = shuffleBefore;
+            this.killNodes = killNodes;
+            //this.enemies = null;
+            this.enemies = wave1;
+
+            Debug.Log(enemies.Length);
+            this.Startactually();
+        }
+        
+
+    }
+__________________
+
+ public EnemiesPerWave(GameObject enemy, int count)
+    {   
+        if(enemy != null)
+        {
+            this.enemy = enemy;
+            this.count = count;
+        }
+      
+    }

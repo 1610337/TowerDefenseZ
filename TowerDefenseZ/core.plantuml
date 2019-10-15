@@ -1,0 +1,2187 @@
+@startuml
+
+title __CORE's Class Diagram__\n
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class ApplicationContext {
+              # attributes : Map
+              - readOnlyAttributes : Map<String, String>
+              - context : StandardContext
+              {static} - empty : ArrayList
+              - facade : ServletContext
+              - parameters : ConcurrentMap<String, String>
+              {static} - sm : StringManager
+              - basePath : String
+              - dispatchData : ThreadLocal<DispatchData>
+              + ApplicationContext()
+              + getResources()
+              + getAttribute()
+              + getAttributeNames()
+              + getContext()
+              + getContextPath()
+              + getInitParameter()
+              + setInitParameter()
+              + getInitParameterNames()
+              + getMajorVersion()
+              + getMinorVersion()
+              + getMimeType()
+              + getNamedDispatcher()
+              + getRealPath()
+              + getRequestDispatcher()
+              + getResource()
+              + getResourceAsStream()
+              + getResourcePaths()
+              - getResourcePathsInternal()
+              + getServerInfo()
+              + getServlet()
+              + getServletContextName()
+              + getServletNames()
+              + getServlets()
+              + log()
+              + log()
+              + log()
+              + removeAttribute()
+              + setAttribute()
+              # getContext()
+              # getReadonlyAttributes()
+              # clearAttributes()
+              # getFacade()
+              ~ setAttributeReadOnly()
+              {static} - listCollectionPaths()
+              {static} - getJNDIUri()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class DispatchData {
+              + uriMB : MessageBytes
+              + mappingData : MappingData
+              + DispatchData()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class ApplicationContextFacade {
+              - classCache : HashMap
+              - objectCache : HashMap
+              - context : ApplicationContext
+              + ApplicationContextFacade()
+              - initClassCache()
+              + getContext()
+              + getMajorVersion()
+              + getMinorVersion()
+              + getMimeType()
+              + getResourcePaths()
+              + getResource()
+              + getResourceAsStream()
+              + getRequestDispatcher()
+              + getNamedDispatcher()
+              + getServlet()
+              + getServlets()
+              + getServletNames()
+              + log()
+              + log()
+              + log()
+              + getRealPath()
+              + getServerInfo()
+              + getInitParameter()
+              + getInitParameterNames()
+              + getAttribute()
+              + getAttributeNames()
+              + setAttribute()
+              + removeAttribute()
+              + getServletContextName()
+              + getContextPath()
+              - doPrivileged()
+              - invokeMethod()
+              - doPrivileged()
+              - executeMethod()
+              - handleException()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class ApplicationDispatcher {
+              - context : Context
+              {static} - info : String
+              - name : String
+              - pathInfo : String
+              - queryString : String
+              - requestURI : String
+              - servletPath : String
+              {static} - sm : StringManager
+              - support : InstanceSupport
+              - wrapper : Wrapper
+              + ApplicationDispatcher()
+              + getInfo()
+              + forward()
+              - doForward()
+              - processRequest()
+              - getCombinedPath()
+              + include()
+              - doInclude()
+              - invoke()
+              - unwrapRequest()
+              - unwrapResponse()
+              - wrapRequest()
+              - wrapResponse()
+              - checkSameObjects()
+              - recycleRequestWrapper()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class PrivilegedForward {
+              - request : ServletRequest
+              - response : ServletResponse
+              ~ PrivilegedForward()
+              + run()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class PrivilegedInclude {
+              - request : ServletRequest
+              - response : ServletResponse
+              ~ PrivilegedInclude()
+              + run()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class State {
+              ~ outerRequest : ServletRequest
+              ~ outerResponse : ServletResponse
+              ~ wrapRequest : ServletRequest
+              ~ wrapResponse : ServletResponse
+              ~ including : boolean
+              ~ hrequest : HttpServletRequest
+              ~ hresponse : HttpServletResponse
+              ~ State()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class ApplicationFilterChain {
+              {static} - lastServicedRequest : ThreadLocal
+              {static} - lastServicedResponse : ThreadLocal
+              {static} + INCREMENT : int
+              - filters : ApplicationFilterConfig[]
+              - pos : int
+              - n : int
+              - servlet : Servlet
+              {static} - sm : StringManager
+              - support : InstanceSupport
+              {static} - classType : Class[]
+              {static} - classTypeUsedInService : Class[]
+              {static} - cometClassType : Class[]
+              {static} - classTypeUsedInEvent : Class[]
+              + ApplicationFilterChain()
+              + doFilter()
+              - internalDoFilter()
+              + doFilterEvent()
+              {static} + getLastServicedRequest()
+              {static} + getLastServicedResponse()
+              - internalDoFilterEvent()
+              ~ addFilter()
+              ~ release()
+              ~ reuse()
+              ~ setServlet()
+              ~ setSupport()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class ApplicationFilterConfig {
+              {static} # sm : StringManager
+              {static} - log : Log
+              - context : Context
+              - filter : Filter
+              - filterDef : FilterDef
+              {static} # restrictedFilters : Properties
+              - oname : ObjectName
+              ~ ApplicationFilterConfig()
+              + getFilterName()
+              + getFilterClass()
+              + getInitParameter()
+              + getInitParameterNames()
+              + getServletContext()
+              + toString()
+              + getFilterInitParameterMap()
+              ~ getFilter()
+              ~ getFilterDef()
+              # isFilterAllowed()
+              ~ release()
+              - registerJMX()
+              - unregisterJMX()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class ApplicationFilterFactory {
+              {static} + ERROR : int
+              {static} + ERROR_INTEGER : Integer
+              {static} + FORWARD : int
+              {static} + FORWARD_INTEGER : Integer
+              {static} + INCLUDE : int
+              {static} + INCLUDE_INTEGER : Integer
+              {static} + REQUEST : int
+              {static} + REQUEST_INTEGER : Integer
+              {static} + DISPATCHER_TYPE_ATTR : String
+              {static} + DISPATCHER_REQUEST_PATH_ATTR : String
+              {static} - factory : ApplicationFilterFactory
+              - ApplicationFilterFactory()
+              {static} + getInstance()
+              + createFilterChain()
+              - matchFiltersURL()
+              - matchFiltersURL()
+              - matchFiltersServlet()
+              - matchDispatcher()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class ApplicationHttpRequest {
+              {static} # specials : String[]
+              {static} # sm : StringManager
+              # context : Context
+              # contextPath : String
+              # crossContext : boolean
+              # dispatcherType : Object
+              {static} # info : String
+              # parameters : Map
+              - parsedParams : boolean
+              # pathInfo : String
+              - queryParamString : String
+              # queryString : String
+              # requestDispatcherPath : Object
+              # requestURI : String
+              # servletPath : String
+              # session : Session
+              # specialAttributes : Object[]
+              + ApplicationHttpRequest()
+              + getAttribute()
+              + getAttributeNames()
+              + removeAttribute()
+              + setAttribute()
+              + getRequestDispatcher()
+              + getContextPath()
+              + getParameter()
+              + getParameterMap()
+              + getParameterNames()
+              + getParameterValues()
+              + getPathInfo()
+              + getQueryString()
+              + getRequestURI()
+              + getRequestURL()
+              + getServletPath()
+              + getSession()
+              + getSession()
+              + isRequestedSessionIdValid()
+              + recycle()
+              + getInfo()
+              ~ setContextPath()
+              ~ setPathInfo()
+              ~ setQueryString()
+              ~ setRequest()
+              ~ setRequestURI()
+              ~ setServletPath()
+              ~ parseParameters()
+              ~ setQueryParams()
+              # isSpecial()
+              # getSpecial()
+              # setSpecial()
+              # removeSpecial()
+              # mergeValues()
+              - mergeParameters()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class AttributeNamesEnumerator {
+              # pos : int
+              # last : int
+              # parentEnumeration : Enumeration
+              # next : String
+              + AttributeNamesEnumerator()
+              + hasMoreElements()
+              + nextElement()
+              # findNext()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class ApplicationHttpResponse {
+              # included : boolean
+              {static} # info : String
+              {static} # sm : StringManager
+              + ApplicationHttpResponse()
+              + ApplicationHttpResponse()
+              + reset()
+              + setContentLength()
+              + setContentType()
+              + setLocale()
+              + setBufferSize()
+              + addCookie()
+              + addDateHeader()
+              + addHeader()
+              + addIntHeader()
+              + sendError()
+              + sendError()
+              + sendRedirect()
+              + setDateHeader()
+              + setHeader()
+              + setIntHeader()
+              + setStatus()
+              + setStatus()
+              + getInfo()
+              ~ isIncluded()
+              ~ setIncluded()
+              ~ setResponse()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class ApplicationRequest {
+              {static} # specials : String[]
+              # attributes : HashMap
+              {static} # sm : StringManager
+              + ApplicationRequest()
+              + getAttribute()
+              + getAttributeNames()
+              + removeAttribute()
+              + setAttribute()
+              + setRequest()
+              # isSpecial()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class ApplicationResponse {
+              # included : boolean
+              {static} # sm : StringManager
+              + ApplicationResponse()
+              + ApplicationResponse()
+              + reset()
+              + setContentLength()
+              + setContentType()
+              + setLocale()
+              + setBufferSize()
+              + setResponse()
+              ~ isIncluded()
+              ~ setIncluded()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class AprLifecycleListener {
+              {static} - log : Log
+              {static} - instanceCreated : boolean
+              {static} # sm : StringManager
+              {static} # TCN_REQUIRED_MAJOR : int
+              {static} # TCN_REQUIRED_MINOR : int
+              {static} # TCN_REQUIRED_PATCH : int
+              {static} # TCN_RECOMMENDED_MINOR : int
+              {static} # TCN_RECOMMENDED_PV : int
+              {static} # SSLEngine : String
+              {static} # FIPSMode : String
+              {static} # SSLRandomSeed : String
+              {static} # sslInitialized : boolean
+              {static} # aprInitialized : boolean
+              {static} # sslAvailable : boolean
+              {static} # aprAvailable : boolean
+              {static} # fipsModeActive : boolean
+              {static} - FIPS_ON : int
+              {static} - FIPS_OFF : int
+              {static} # lock : Object
+              {static} + isAprAvailable()
+              + AprLifecycleListener()
+              + lifecycleEvent()
+              {static} - terminateAPR()
+              {static} - init()
+              {static} - initializeSSL()
+              + getSSLEngine()
+              + setSSLEngine()
+              + getSSLRandomSeed()
+              + setSSLRandomSeed()
+              + getFIPSMode()
+              + setFIPSMode()
+              + isFIPSModeActive()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class Constants {
+              {static} + Package : String
+              {static} + MAJOR_VERSION : int
+              {static} + MINOR_VERSION : int
+              {static} + JSP_SERVLET_CLASS : String
+              {static} + JSP_SERVLET_NAME : String
+              {static} + PRECOMPILE : String
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          abstract class ContainerBase {
+              {static} - log : Log
+              # children : HashMap
+              # backgroundProcessorDelay : int
+              # lifecycle : LifecycleSupport
+              # listeners : ArrayList
+              # loader : Loader
+              # logger : Log
+              # logName : String
+              # manager : Manager
+              # cluster : Cluster
+              # name : String
+              # parent : Container
+              # parentClassLoader : ClassLoader
+              # pipeline : Pipeline
+              # realm : Realm
+              # resources : DirContext
+              {static} # sm : StringManager
+              # started : boolean
+              # initialized : boolean
+              # startChildren : boolean
+              # support : PropertyChangeSupport
+              - thread : Thread
+              - threadDone : boolean
+              # accessLog : AccessLog
+              - accessLogScanComplete : boolean
+              # type : String
+              # domain : String
+              # suffix : String
+              # oname : ObjectName
+              # controller : ObjectName
+              # mserver : MBeanServer
+              + getBackgroundProcessorDelay()
+              + setBackgroundProcessorDelay()
+              + getInfo()
+              + getLoader()
+              + setLoader()
+              + getLogger()
+              + getManager()
+              + setManager()
+              + getMappingObject()
+              + getCluster()
+              + setCluster()
+              + getName()
+              + setName()
+              + getStartChildren()
+              + setStartChildren()
+              + getParent()
+              + setParent()
+              + getParentClassLoader()
+              + setParentClassLoader()
+              + getPipeline()
+              + getRealm()
+              + setRealm()
+              + getResources()
+              + setResources()
+              + addChild()
+              - addChildInternal()
+              + addContainerListener()
+              + addPropertyChangeListener()
+              + findChild()
+              + findChildren()
+              + findContainerListeners()
+              + invoke()
+              + removeChild()
+              + removeContainerListener()
+              + removePropertyChangeListener()
+              + addLifecycleListener()
+              + findLifecycleListeners()
+              + removeLifecycleListener()
+              + start()
+              + stop()
+              + init()
+              + getParentName()
+              + destroy()
+              + logAccess()
+              + getAccessLog()
+              + addValve()
+              + getValveObjectNames()
+              + getBasic()
+              + getFirst()
+              + getValves()
+              + removeValve()
+              + setBasic()
+              + backgroundProcess()
+              + fireContainerEvent()
+              # logName()
+              + getJmxName()
+              + getObjectName()
+              + getDomain()
+              + setDomain()
+              + getType()
+              # getJSR77Suffix()
+              + preRegister()
+              + postRegister()
+              + preDeregister()
+              + postDeregister()
+              + getChildren()
+              + createObjectName()
+              + getContainerSuffix()
+              # threadStart()
+              # threadStop()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class PrivilegedAddChild {
+              - child : Container
+              ~ PrivilegedAddChild()
+              + run()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class ContainerBackgroundProcessor {
+              + run()
+              # processChildren()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class NoopAccessLog {
+              + log()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class DummyRequest {
+              # contextPath : String
+              # decodedURI : String
+              # queryString : String
+              # pathInfo : String
+              # servletPath : String
+              # wrapper : Wrapper
+              # filterChain : FilterChain
+              {static} - dummyEnum : Enumeration
+              + DummyRequest()
+              + DummyRequest()
+              + getContextPath()
+              + getContextPathMB()
+              + getRequest()
+              + getDecodedRequestURI()
+              + getDecodedRequestURIMB()
+              + getFilterChain()
+              + setFilterChain()
+              + getQueryString()
+              + setQueryString()
+              + getPathInfo()
+              + setPathInfo()
+              + getPathInfoMB()
+              + getRequestPathMB()
+              + getServletPath()
+              + setServletPath()
+              + getServletPathMB()
+              + getWrapper()
+              + setWrapper()
+              + getAuthorization()
+              + setAuthorization()
+              + getConnector()
+              + setConnector()
+              + getContext()
+              + setContext()
+              + getHost()
+              + setHost()
+              + getInfo()
+              + getResponse()
+              + setResponse()
+              + getSocket()
+              + setSocket()
+              + getStream()
+              + setStream()
+              + addLocale()
+              + createInputStream()
+              + finishRequest()
+              + getNote()
+              + getNoteNames()
+              + removeNote()
+              + setContentType()
+              + setNote()
+              + setProtocol()
+              + setRemoteAddr()
+              + setRemoteHost()
+              + setScheme()
+              + setServerName()
+              + setServerPort()
+              + getAttribute()
+              + getAttributeNames()
+              + getCharacterEncoding()
+              + getContentLength()
+              + setContentLength()
+              + getContentType()
+              + getInputStream()
+              + getLocale()
+              + getLocales()
+              + getProtocol()
+              + getReader()
+              + getRealPath()
+              + getRemoteAddr()
+              + getRemoteHost()
+              + getScheme()
+              + getServerName()
+              + getServerPort()
+              + isSecure()
+              + removeAttribute()
+              + setAttribute()
+              + setCharacterEncoding()
+              + addCookie()
+              + addHeader()
+              + addParameter()
+              + clearCookies()
+              + clearHeaders()
+              + clearLocales()
+              + clearParameters()
+              + recycle()
+              + setAuthType()
+              + setContextPath()
+              + setMethod()
+              + setRequestedSessionCookie()
+              + setRequestedSessionId()
+              + setRequestedSessionURL()
+              + setRequestURI()
+              + setSecure()
+              + setUserPrincipal()
+              + getParameter()
+              + getParameterMap()
+              + getParameterNames()
+              + getParameterValues()
+              + getRequestDispatcher()
+              + getAuthType()
+              + getCookies()
+              + getDateHeader()
+              + getHeader()
+              + getHeaders()
+              + getHeaderNames()
+              + getIntHeader()
+              + getMethod()
+              + getPathTranslated()
+              + getRemoteUser()
+              + getRequestedSessionId()
+              + getRequestURI()
+              + setDecodedRequestURI()
+              + getRequestURL()
+              + getSession()
+              + getSession()
+              + isRequestedSessionIdFromCookie()
+              + isRequestedSessionIdFromURL()
+              + isRequestedSessionIdFromUrl()
+              + isRequestedSessionIdValid()
+              + isUserInRole()
+              + getUserPrincipal()
+              + getLocalAddr()
+              + getLocalName()
+              + getLocalPort()
+              + getRemotePort()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class DummyResponse {
+              + DummyResponse()
+              + setAppCommitted()
+              + isAppCommitted()
+              + getConnector()
+              + setConnector()
+              + getContentCount()
+              + getContext()
+              + setContext()
+              + getIncluded()
+              + setIncluded()
+              + getInfo()
+              + getRequest()
+              + setRequest()
+              + getResponse()
+              + getStream()
+              + setStream()
+              + setSuspended()
+              + isSuspended()
+              + setError()
+              + isError()
+              + createOutputStream()
+              + finishResponse()
+              + getContentLength()
+              + getContentType()
+              + getReporter()
+              + recycle()
+              + write()
+              + write()
+              + write()
+              + flushBuffer()
+              + getBufferSize()
+              + getCharacterEncoding()
+              + setCharacterEncoding()
+              + getOutputStream()
+              + getLocale()
+              + getWriter()
+              + isCommitted()
+              + reset()
+              + resetBuffer()
+              + setBufferSize()
+              + setContentLength()
+              + setContentType()
+              + setLocale()
+              + getCookies()
+              + getHeader()
+              + getHeaderNames()
+              + getHeaderValues()
+              + getMessage()
+              + getStatus()
+              + reset()
+              + addCookie()
+              + addDateHeader()
+              + addHeader()
+              + addIntHeader()
+              + containsHeader()
+              + encodeRedirectURL()
+              + encodeRedirectUrl()
+              + encodeURL()
+              + encodeUrl()
+              + sendAcknowledgement()
+              + sendError()
+              + sendError()
+              + sendRedirect()
+              + setDateHeader()
+              + setHeader()
+              + setIntHeader()
+              + setStatus()
+              + setStatus()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class JasperListener {
+              {static} - log : Log
+              # sm : StringManager
+              + lifecycleEvent()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class JreMemoryLeakPreventionListener {
+              {static} - log : Log
+              {static} - sm : StringManager
+              - appContextProtection : boolean
+              - awtThreadProtection : boolean
+              - gcDaemonProtection : boolean
+              - securityPolicyProtection : boolean
+              - securityLoginConfigurationProtection : boolean
+              - tokenPollerProtection : boolean
+              - urlCacheProtection : boolean
+              - xmlParsingProtection : boolean
+              - ldapPoolProtection : boolean
+              - driverManagerProtection : boolean
+              - classesToInitialize : String
+              + isAppContextProtection()
+              + setAppContextProtection()
+              + isAWTThreadProtection()
+              + setAWTThreadProtection()
+              + isGcDaemonProtection()
+              + setGcDaemonProtection()
+              + isSecurityPolicyProtection()
+              + setSecurityPolicyProtection()
+              + isSecurityLoginConfigurationProtection()
+              + setSecurityLoginConfigurationProtection()
+              + isTokenPollerProtection()
+              + setTokenPollerProtection()
+              + isUrlCacheProtection()
+              + setUrlCacheProtection()
+              + isXmlParsingProtection()
+              + setXmlParsingProtection()
+              + isLdapPoolProtection()
+              + setLdapPoolProtection()
+              + isDriverManagerProtection()
+              + setDriverManagerProtection()
+              + getClassesToInitialize()
+              + setClassesToInitialize()
+              + lifecycleEvent()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class NamingContextListener {
+              {static} - log : Log
+              # logger : Log
+              # name : String
+              # container : Object
+              # initialized : boolean
+              # namingResources : NamingResources
+              # namingContext : NamingContext
+              # compCtx : Context
+              # envCtx : Context
+              # objectNames : HashMap
+              {static} # sm : StringManager
+              + getName()
+              + setName()
+              + getCompContext()
+              + getEnvContext()
+              + getNamingContext()
+              + lifecycleEvent()
+              + containerEvent()
+              + propertyChange()
+              - processGlobalResourcesChange()
+              - createNamingContext()
+              # createObjectName()
+              + addEjb()
+              + addEnvironment()
+              + addLocalEjb()
+              + addService()
+              + addResource()
+              + addResourceEnvRef()
+              + addResourceLink()
+              - getGlobalNamingContext()
+              + removeEjb()
+              + removeEnvironment()
+              + removeLocalEjb()
+              + removeService()
+              + removeResource()
+              + removeResourceEnvRef()
+              + removeResourceLink()
+              - createSubcontexts()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class StandardContext {
+              {static} - log : Log
+              {static} - info : String
+              {static} # urlEncoder : URLEncoder
+              - altDDName : String
+              - annotationProcessor : AnnotationProcessor
+              - hostName : String
+              - antiJARLocking : boolean
+              - antiResourceLocking : boolean
+              - applicationListeners : String[]
+              - applicationListenersLock : Object
+              - applicationEventListenersObjects : Object[]
+              - applicationLifecycleListenersObjects : Object[]
+              - applicationParameters : ApplicationParameter[]
+              - applicationParametersLock : Object
+              - available : boolean
+              - broadcaster : NotificationBroadcasterSupport
+              - charsetMapper : CharsetMapper
+              - charsetMapperClass : String
+              - configFile : String
+              - configured : boolean
+              - constraints : SecurityConstraint[]
+              - constraintsLock : Object
+              # context : ApplicationContext
+              - compilerClasspath : String
+              - cookies : boolean
+              - crossContext : boolean
+              - encodedPath : String
+              - delegate : boolean
+              - displayName : String
+              - defaultContextXml : String
+              - defaultWebXml : String
+              - distributable : boolean
+              - docBase : String
+              - disableURLRewriting : boolean
+              - exceptionPages : HashMap
+              - filterConfigs : HashMap
+              - filterDefs : HashMap
+              - filterMaps : FilterMap[]
+              - filterMapsLock : Object
+              - ignoreAnnotations : boolean
+              - instanceListeners : String[]
+              - instanceListenersLock : Object
+              - loginConfig : LoginConfig
+              - mapper : Mapper
+              - namingContextListener : NamingContextListener
+              - namingResources : NamingResources
+              - messageDestinations : HashMap
+              - mimeMappings : HashMap
+              - okErrorPage : ErrorPage
+              - parameters : ConcurrentMap<String, String>
+              - paused : boolean
+              - publicId : String
+              - reloadable : boolean
+              - unpackWAR : boolean
+              - override : boolean
+              - originalDocBase : String
+              - privileged : boolean
+              - replaceWelcomeFiles : boolean
+              - roleMappings : HashMap
+              - securityRoles : String[]
+              - securityRolesLock : Object
+              - servletMappings : HashMap
+              - servletMappingsLock : Object
+              - sessionTimeout : int
+              - sequenceNumber : long
+              - statusPages : HashMap
+              - swallowOutput : boolean
+              - taglibs : HashMap
+              - unloadDelay : long
+              - watchedResources : String[]
+              - watchedResourcesLock : Object
+              - welcomeFiles : String[]
+              - welcomeFilesLock : Object
+              - wrapperLifecycles : String[]
+              - wrapperLifecyclesLock : Object
+              - wrapperListeners : String[]
+              - wrapperListenersLock : Object
+              - workDir : String
+              - wrapperClassName : String
+              - wrapperClass : Class
+              - useNaming : boolean
+              - filesystemBased : boolean
+              - namingContextName : String
+              - cachingAllowed : boolean
+              # caseSensitive : boolean
+              # allowLinking : boolean
+              # cacheMaxSize : int
+              - xmlBlockExternal : boolean
+              # cacheObjectMaxSize : int
+              # cacheTTL : int
+              - lazy : boolean
+              - webappResources : DirContext
+              - startupTime : long
+              - startTime : long
+              - tldScanTime : long
+              - engineName : String
+              - j2EEApplication : String
+              - j2EEServer : String
+              - webXmlValidation : boolean
+              - webXmlNamespaceAware : boolean
+              - processTlds : boolean
+              - tldValidation : boolean
+              - saveConfig : boolean
+              - useHttpOnly : boolean
+              - sessionCookieDomain : String
+              - sessionCookiePath : String
+              - sessionCookieName : String
+              - clearReferencesRmiTargets : boolean
+              - clearReferencesStopThreads : boolean
+              - clearReferencesStopTimerThreads : boolean
+              - clearReferencesHttpClientKeepAliveThread : boolean
+              - clearReferencesThreadLocals : boolean
+              ~ mapperContextRootRedirectEnabled : boolean
+              ~ mapperDirectoryRedirectEnabled : boolean
+              - dispatchersUseEncodedPaths : boolean
+              - notificationInfo : MBeanNotificationInfo[]
+              - server : String
+              - javaVMs : String[]
+              + StandardContext()
+              + setDispatchersUseEncodedPaths()
+              + getDispatchersUseEncodedPaths()
+              + setMapperContextRootRedirectEnabled()
+              + getMapperContextRootRedirectEnabled()
+              + setMapperDirectoryRedirectEnabled()
+              + getMapperDirectoryRedirectEnabled()
+              + getAnnotationProcessor()
+              + setAnnotationProcessor()
+              + getEncodedPath()
+              + setName()
+              + isCachingAllowed()
+              + setCachingAllowed()
+              + setCaseSensitive()
+              + isCaseSensitive()
+              + setAllowLinking()
+              + isAllowLinking()
+              + setCacheTTL()
+              + getCacheTTL()
+              + getCacheMaxSize()
+              + setCacheMaxSize()
+              + getCacheObjectMaxSize()
+              + setCacheObjectMaxSize()
+              + getDelegate()
+              + setDelegate()
+              + isUseNaming()
+              + setUseNaming()
+              + isFilesystemBased()
+              + getApplicationEventListeners()
+              + setApplicationEventListeners()
+              + getApplicationLifecycleListeners()
+              + setApplicationLifecycleListeners()
+              + getAntiJARLocking()
+              + getAntiResourceLocking()
+              + setAntiJARLocking()
+              + setAntiResourceLocking()
+              + getAvailable()
+              + setAvailable()
+              + getCharsetMapper()
+              + setCharsetMapper()
+              + getConfigFile()
+              + setConfigFile()
+              + getConfigured()
+              + setConfigured()
+              + getCookies()
+              + setCookies()
+              + getUseHttpOnly()
+              + setUseHttpOnly()
+              + getSessionCookieDomain()
+              + setSessionCookieDomain()
+              + getSessionCookiePath()
+              + setSessionCookiePath()
+              + getSessionCookieName()
+              + setSessionCookieName()
+              + getCrossContext()
+              + setCrossContext()
+              + getDefaultContextXml()
+              + setDefaultContextXml()
+              + getDefaultWebXml()
+              + setDefaultWebXml()
+              + getStartupTime()
+              + setStartupTime()
+              + getTldScanTime()
+              + setTldScanTime()
+              + getDisplayName()
+              + getAltDDName()
+              + setAltDDName()
+              + getCompilerClasspath()
+              + setCompilerClasspath()
+              + setDisplayName()
+              + getDistributable()
+              + setDistributable()
+              + getDocBase()
+              + setDocBase()
+              + isDisableURLRewriting()
+              + setDisableURLRewriting()
+              + isLazy()
+              + setLazy()
+              + getInfo()
+              + getEngineName()
+              + setEngineName()
+              + getJ2EEApplication()
+              + setJ2EEApplication()
+              + getJ2EEServer()
+              + setJ2EEServer()
+              + setLoader()
+              + getIgnoreAnnotations()
+              + setIgnoreAnnotations()
+              + getLoginConfig()
+              + setLoginConfig()
+              + getMapper()
+              + getNamingResources()
+              + setNamingResources()
+              + getPath()
+              + setPath()
+              + getPublicId()
+              + setPublicId()
+              + getReloadable()
+              + getOverride()
+              + getOriginalDocBase()
+              + setOriginalDocBase()
+              + getParentClassLoader()
+              + getPrivileged()
+              + setPrivileged()
+              + setReloadable()
+              + setOverride()
+              + isReplaceWelcomeFiles()
+              + setReplaceWelcomeFiles()
+              + getServletContext()
+              + getSessionTimeout()
+              + setSessionTimeout()
+              + getSwallowOutput()
+              + setSwallowOutput()
+              + getUnloadDelay()
+              + setUnloadDelay()
+              + getUnpackWAR()
+              + setUnpackWAR()
+              + getWrapperClass()
+              + setWrapperClass()
+              + setResources()
+              + getCharsetMapperClass()
+              + setCharsetMapperClass()
+              + getWorkPath()
+              + getWorkDir()
+              + setWorkDir()
+              + getClearReferencesRmiTargets()
+              + setClearReferencesRmiTargets()
+              + isSaveConfig()
+              + setSaveConfig()
+              + getClearReferencesStopThreads()
+              + setClearReferencesStopThreads()
+              + getClearReferencesStopTimerThreads()
+              + setClearReferencesStopTimerThreads()
+              + getClearReferencesThreadLocals()
+              + getClearReferencesHttpClientKeepAliveThread()
+              + setClearReferencesHttpClientKeepAliveThread()
+              + setClearReferencesThreadLocals()
+              + addApplicationListener()
+              + addApplicationParameter()
+              + addChild()
+              + addConstraint()
+              + addErrorPage()
+              + addFilterDef()
+              + addFilterMap()
+              + addInstanceListener()
+              + addJspMapping()
+              + addLocaleEncodingMappingParameter()
+              + addMessageDestination()
+              + addMessageDestinationRef()
+              + addMimeMapping()
+              + addParameter()
+              + addRoleMapping()
+              + addSecurityRole()
+              + addServletMapping()
+              + addServletMapping()
+              + addTaglib()
+              + addWatchedResource()
+              + addWelcomeFile()
+              + addWrapperLifecycle()
+              + addWrapperListener()
+              + createWrapper()
+              + findApplicationListeners()
+              + findApplicationParameters()
+              + findConstraints()
+              + findErrorPage()
+              + findErrorPage()
+              + findErrorPages()
+              + findFilterDef()
+              + findFilterDefs()
+              + findFilterMaps()
+              + findInstanceListeners()
+              + findMappingObject()
+              + findMessageDestination()
+              + findMessageDestinations()
+              + findMessageDestinationRef()
+              + findMessageDestinationRefs()
+              + findMimeMapping()
+              + findMimeMappings()
+              + findParameter()
+              + findParameters()
+              + findRoleMapping()
+              + findSecurityRole()
+              + findSecurityRoles()
+              + findServletMapping()
+              + findServletMappings()
+              + findStatusPage()
+              + findStatusPages()
+              + findTaglib()
+              + findTaglibs()
+              + findWelcomeFile()
+              + findWatchedResources()
+              + findWelcomeFiles()
+              + findWrapperLifecycles()
+              + findWrapperListeners()
+              + reload()
+              + removeApplicationListener()
+              + removeApplicationParameter()
+              + removeChild()
+              + removeConstraint()
+              + removeErrorPage()
+              + removeFilterDef()
+              + removeFilterMap()
+              + removeInstanceListener()
+              + removeMessageDestination()
+              + removeMessageDestinationRef()
+              + removeMimeMapping()
+              + removeParameter()
+              + removeRoleMapping()
+              + removeSecurityRole()
+              + removeServletMapping()
+              + removeTaglib()
+              + removeWatchedResource()
+              + removeWelcomeFile()
+              + removeWrapperLifecycle()
+              + removeWrapperListener()
+              + getProcessingTime()
+              + filterStart()
+              + filterStop()
+              + findFilterConfig()
+              + listenerStart()
+              + listenerStop()
+              + resourcesStart()
+              + resourcesStop()
+              + loadOnStartup()
+              + start()
+              - cacheContext()
+              - mergeParameters()
+              + stop()
+              + destroy()
+              - resetContext()
+              + toString()
+              # adjustURLPattern()
+              # isServlet22()
+              # engineBase()
+              - bindThread()
+              - unbindThread()
+              # getBasePath()
+              # getAppBase()
+              + getConfigBase()
+              # getDefaultConfigFile()
+              - copy()
+              - getNamingContextName()
+              + getNamingContextListener()
+              + setNamingContextListener()
+              + getPaused()
+              - postResources()
+              - postWelcomeFiles()
+              + getHostname()
+              - postWorkDirectory()
+              - setPaused()
+              - validateURLPattern()
+              - checkUnusualURLPattern()
+              + getDeploymentDescriptor()
+              + getServlets()
+              + createObjectName()
+              - preRegisterJMX()
+              - registerJMX()
+              + preRegister()
+              + preDeregister()
+              + init()
+              + getParentName()
+              + create()
+              + removeNotificationListener()
+              + getNotificationInfo()
+              + addNotificationListener()
+              + removeNotificationListener()
+              + getStaticResources()
+              + findStaticResources()
+              + getWelcomeFiles()
+              + getXmlNamespaceAware()
+              + setXmlNamespaceAware()
+              + setXmlValidation()
+              + getXmlValidation()
+              + getTldNamespaceAware()
+              + setTldNamespaceAware()
+              + setXmlBlockExternal()
+              + getXmlBlockExternal()
+              + setTldValidation()
+              + getTldValidation()
+              + setProcessTlds()
+              + getProcessTlds()
+              + isStateManageable()
+              + startRecursive()
+              + getState()
+              + getStateName()
+              + getServer()
+              + setServer()
+              + getJavaVMs()
+              + setJavaVMs()
+              + getStartTime()
+              + isEventProvider()
+              + isStatisticsProvider()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class StandardContextValve {
+              {static} - info : String
+              {static} - sm : StringManager
+              - context : StandardContext
+              + getInfo()
+              + setContainer()
+              + invoke()
+              + event()
+              - notFound()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class StandardEngine {
+              {static} - log : Log
+              - defaultHost : String
+              {static} - info : String
+              - service : Service
+              - baseDir : String
+              - mbeansFile : String
+              - mbeans : List
+              - jvmRouteId : String
+              - defaultAccessLog : AtomicReference<AccessLog>
+              - initialized : boolean
+              + StandardEngine()
+              + getRealm()
+              + getDefaultHost()
+              + setDefaultHost()
+              + setName()
+              + setJvmRoute()
+              + getJvmRoute()
+              + getService()
+              + setService()
+              + getMbeansFile()
+              + setMbeansFile()
+              + getBaseDir()
+              + setBaseDir()
+              + addChild()
+              + getInfo()
+              + setParent()
+              + init()
+              + destroy()
+              + start()
+              + stop()
+              + toString()
+              + logAccess()
+              + preRegister()
+              + getParentName()
+              + createObjectName()
+              - readEngineMbeans()
+              + getDomain()
+              + setDomain()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class AccessLogListener {
+              - host : Host
+              - context : Context
+              - disabled : boolean
+              + AccessLogListener()
+              + install()
+              - uninstall()
+              + lifecycleEvent()
+              + propertyChange()
+              + containerEvent()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class StandardEngineValve {
+              {static} - info : String
+              {static} - sm : StringManager
+              + getInfo()
+              + invoke()
+              + event()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class StandardHost {
+              {static} - log : Log
+              - aliases : String[]
+              - aliasesLock : Object
+              - appBase : String
+              - autoDeploy : boolean
+              - configClass : String
+              - contextClass : String
+              - deployOnStartup : boolean
+              - deployXML : boolean
+              - errorReportValveClass : String
+              - errorReportValveObjectName : ObjectName
+              {static} - info : String
+              - liveDeploy : boolean
+              - unpackWARs : boolean
+              - workDir : String
+              - xmlValidation : boolean
+              - xmlNamespaceAware : boolean
+              - childClassLoaders : Map<ClassLoader, String>
+              - deployIgnore : Pattern
+              - initialized : boolean
+              + StandardHost()
+              + getAppBase()
+              + setAppBase()
+              + getAutoDeploy()
+              + setAutoDeploy()
+              + getConfigClass()
+              + setConfigClass()
+              + getContextClass()
+              + setContextClass()
+              + getDeployOnStartup()
+              + setDeployOnStartup()
+              + isDeployXML()
+              + setDeployXML()
+              + getLiveDeploy()
+              + setLiveDeploy()
+              + getErrorReportValveClass()
+              + setErrorReportValveClass()
+              + getName()
+              + setName()
+              + isUnpackWARs()
+              + setUnpackWARs()
+              + setXmlValidation()
+              + getXmlValidation()
+              + getXmlNamespaceAware()
+              + setXmlNamespaceAware()
+              + getWorkDir()
+              + setWorkDir()
+              + getDeployIgnore()
+              + getDeployIgnorePattern()
+              + setDeployIgnore()
+              + addAlias()
+              + addChild()
+              + findReloadedContextMemoryLeaks()
+              + findAliases()
+              + getInfo()
+              + map()
+              + removeAlias()
+              + toString()
+              + start()
+              + getValveNames()
+              + getAliases()
+              + init()
+              + destroy()
+              + preRegister()
+              + createObjectName()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class MemoryLeakTrackingListener {
+              + lifecycleEvent()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class StandardHostValve {
+              {static} - log : Log
+              {static} - info : String
+              {static} - sm : StringManager
+              + getInfo()
+              + invoke()
+              + event()
+              # throwable()
+              # status()
+              {static} # findErrorPage()
+              # custom()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class StandardPipeline {
+              {static} - log : Log
+              # basic : Valve
+              # container : Container
+              # info : String
+              # lifecycle : LifecycleSupport
+              {static} # sm : StringManager
+              # started : boolean
+              # first : Valve
+              + StandardPipeline()
+              + StandardPipeline()
+              + getInfo()
+              + getContainer()
+              + setContainer()
+              + addLifecycleListener()
+              + findLifecycleListeners()
+              + removeLifecycleListener()
+              + start()
+              + stop()
+              - registerValve()
+              - unregisterValve()
+              + getBasic()
+              + setBasic()
+              + addValve()
+              + getValves()
+              + getValveObjectNames()
+              + removeValve()
+              + getFirst()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class StandardServer {
+              {static} - log : Log
+              {static} - SERVER_LISTENER_CLASS_NAME : String
+              - globalNamingContext : Context
+              - globalNamingResources : NamingResources
+              {static} - info : String
+              - lifecycle : LifecycleSupport
+              - namingContextListener : NamingContextListener
+              - port : int
+              - random : Random
+              - services : Service[]
+              - shutdown : String
+              {static} - sm : StringManager
+              - started : boolean
+              - initialized : boolean
+              # support : PropertyChangeSupport
+              - stopAwait : boolean
+              - awaitThread : Thread
+              - awaitSocket : ServerSocket
+              # type : String
+              # domain : String
+              # suffix : String
+              # oname : ObjectName
+              # mserver : MBeanServer
+              + StandardServer()
+              + getGlobalNamingContext()
+              + setGlobalNamingContext()
+              + getGlobalNamingResources()
+              + setGlobalNamingResources()
+              + getInfo()
+              + getServerInfo()
+              + getPort()
+              + setPort()
+              + getShutdown()
+              + setShutdown()
+              + addService()
+              + stopAwait()
+              + await()
+              + findService()
+              + findServices()
+              + getServiceNames()
+              + removeService()
+              + addPropertyChangeListener()
+              + removePropertyChangeListener()
+              + toString()
+              + storeConfig()
+              + storeContext()
+              - isUseNaming()
+              + addLifecycleListener()
+              + findLifecycleListeners()
+              + removeLifecycleListener()
+              + start()
+              + stop()
+              + init()
+              + initialize()
+              + getObjectName()
+              + getDomain()
+              + preRegister()
+              + postRegister()
+              + preDeregister()
+              + postDeregister()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class StandardService {
+              {static} - log : Log
+              {static} - info : String
+              - name : String
+              - lifecycle : LifecycleSupport
+              {static} - sm : StringManager
+              - server : Server
+              - started : boolean
+              # support : PropertyChangeSupport
+              # connectors : Connector[]
+              # executors : ArrayList<Executor>
+              # container : Container
+              # initialized : boolean
+              # type : String
+              # domain : String
+              # suffix : String
+              # oname : ObjectName
+              # controller : ObjectName
+              # mserver : MBeanServer
+              + getContainer()
+              + setContainer()
+              + getContainerName()
+              + getInfo()
+              + getName()
+              + setName()
+              + getServer()
+              + setServer()
+              + addConnector()
+              + getConnectorNames()
+              + addPropertyChangeListener()
+              + findConnectors()
+              + removeConnector()
+              + removePropertyChangeListener()
+              + toString()
+              + addLifecycleListener()
+              + findLifecycleListeners()
+              + removeLifecycleListener()
+              + addExecutor()
+              + findExecutors()
+              + getExecutor()
+              + removeExecutor()
+              + start()
+              + stop()
+              + initialize()
+              + destroy()
+              + init()
+              + getObjectName()
+              + getDomain()
+              + preRegister()
+              + postRegister()
+              + preDeregister()
+              + postDeregister()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class StandardThreadExecutor {
+              # threadPriority : int
+              # daemon : boolean
+              # namePrefix : String
+              # maxThreads : int
+              # minSpareThreads : int
+              # maxIdleTime : int
+              # executor : ThreadPoolExecutor
+              # name : String
+              # submittedTasksCount : AtomicInteger
+              # maxQueueSize : int
+              - lifecycle : LifecycleSupport
+              + StandardThreadExecutor()
+              + start()
+              + stop()
+              + execute()
+              + execute()
+              + getThreadPriority()
+              + isDaemon()
+              + getNamePrefix()
+              + getMaxIdleTime()
+              + getMaxThreads()
+              + getMinSpareThreads()
+              + getName()
+              + setThreadPriority()
+              + setDaemon()
+              + setNamePrefix()
+              + setMaxIdleTime()
+              + setMaxThreads()
+              + setMinSpareThreads()
+              + setName()
+              + setMaxQueueSize()
+              + getMaxQueueSize()
+              + addLifecycleListener()
+              + findLifecycleListeners()
+              + removeLifecycleListener()
+              + getActiveCount()
+              + getCompletedTaskCount()
+              + getCorePoolSize()
+              + getLargestPoolSize()
+              + getPoolSize()
+              + getQueueSize()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class TaskQueue {
+              ~ parent : ThreadPoolExecutor
+              + TaskQueue()
+              + TaskQueue()
+              + TaskQueue()
+              + setParent()
+              + force()
+              + force()
+              + offer()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class TaskThreadFactory {
+              ~ group : ThreadGroup
+              ~ threadNumber : AtomicInteger
+              ~ namePrefix : String
+              ~ TaskThreadFactory()
+              + newThread()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class StandardWrapper {
+              {static} # log : Log
+              {static} # DEFAULT_SERVLET_METHODS : String[]
+              # available : long
+              # broadcaster : NotificationBroadcasterSupport
+              # countAllocated : AtomicInteger
+              # facade : StandardWrapperFacade
+              {static} # info : String
+              # instance : Servlet
+              # instanceSupport : InstanceSupport
+              # jspFile : String
+              # loadOnStartup : int
+              # mappings : ArrayList
+              # parameters : HashMap
+              # references : HashMap
+              # runAs : String
+              # sequenceNumber : long
+              # servletClass : String
+              # singleThreadModel : boolean
+              # unloading : boolean
+              # maxInstances : int
+              # nInstances : int
+              # instancePool : Stack
+              # unloadDelay : long
+              # isJspServlet : boolean
+              # jspMonitorON : ObjectName
+              # swallowOutput : boolean
+              # swValve : StandardWrapperValve
+              # loadTime : long
+              # classLoadTime : int
+              {static} # classType : Class[]
+              {static} # classTypeUsedInService : Class[]
+              {static} # restrictedServlets : Properties
+              - parametersLock : ReentrantReadWriteLock
+              - mappingsLock : ReentrantReadWriteLock
+              - referencesLock : ReentrantReadWriteLock
+              # notificationInfo : MBeanNotificationInfo[]
+              + StandardWrapper()
+              + getAvailable()
+              + setAvailable()
+              + getCountAllocated()
+              + getEngineName()
+              + getInfo()
+              + getInstanceSupport()
+              + getJspFile()
+              + setJspFile()
+              + getLoadOnStartup()
+              + setLoadOnStartup()
+              + setLoadOnStartupString()
+              + getLoadOnStartupString()
+              + getMaxInstances()
+              + setMaxInstances()
+              + setParent()
+              + getRunAs()
+              + setRunAs()
+              + getServletClass()
+              + setServletClass()
+              + setServletName()
+              + isSingleThreadModel()
+              + isUnavailable()
+              + getServletMethods()
+              + backgroundProcess()
+              {static} + getRootCause()
+              + addChild()
+              + addInitParameter()
+              + addInstanceListener()
+              + addMapping()
+              + addSecurityReference()
+              + getServlet()
+              + allocate()
+              + deallocate()
+              + findInitParameter()
+              + findInitParameters()
+              + findMappings()
+              + findSecurityReference()
+              + findSecurityReferences()
+              + findMappingObject()
+              + load()
+              + loadServlet()
+              + removeInitParameter()
+              + removeInstanceListener()
+              + removeMapping()
+              + removeSecurityReference()
+              + toString()
+              + unavailable()
+              + unload()
+              + getInitParameter()
+              + getInitParameterNames()
+              + getServletContext()
+              + getServletName()
+              + getProcessingTime()
+              + setProcessingTime()
+              + getMaxTime()
+              + setMaxTime()
+              + getMinTime()
+              + setMinTime()
+              + getRequestCount()
+              + setRequestCount()
+              + getErrorCount()
+              + setErrorCount()
+              + incrementErrorCount()
+              + getLoadTime()
+              + setLoadTime()
+              + getClassLoadTime()
+              # addDefaultMapper()
+              # isContainerProvidedServlet()
+              # isServletAllowed()
+              # getAllDeclaredMethods()
+              + start()
+              + stop()
+              # registerJMX()
+              + removeNotificationListener()
+              + getNotificationInfo()
+              + addNotificationListener()
+              + removeNotificationListener()
+              + isEventProvider()
+              + isStateManageable()
+              + isStatisticsProvider()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class StandardWrapperFacade {
+              - config : ServletConfig
+              - context : ServletContext
+              + StandardWrapperFacade()
+              + getServletName()
+              + getServletContext()
+              + getInitParameter()
+              + getInitParameterNames()
+          }
+        }
+      }
+    }
+  }
+
+
+  package  {
+    package org.apache {
+      package org.apache.catalina {
+        package org.apache.catalina.core {
+          class StandardWrapperValve {
+              - processingTime : long
+              - maxTime : long
+              - minTime : long
+              - requestCount : int
+              - errorCount : int
+              {static} - sm : StringManager
+              + invoke()
+              + event()
+              - exception()
+              + getProcessingTime()
+              + setProcessingTime()
+              + getMaxTime()
+              + setMaxTime()
+              + getMinTime()
+              + setMinTime()
+              + getRequestCount()
+              + setRequestCount()
+              + getErrorCount()
+              + setErrorCount()
+              + createObjectName()
+          }
+        }
+      }
+    }
+  }
+
+
+  ApplicationContext -up-|> ServletContext
+  ApplicationContext +-down- DispatchData
+  ApplicationContextFacade -up-|> ServletContext
+  ApplicationDispatcher -up-|> RequestDispatcher
+  ApplicationDispatcher +-down- PrivilegedForward
+  ApplicationDispatcher +-down- PrivilegedInclude
+  ApplicationDispatcher +-down- State
+  PrivilegedForward -up-|> PrivilegedExceptionAction
+  PrivilegedInclude -up-|> PrivilegedExceptionAction
+  ApplicationFilterChain -up-|> FilterChain
+  ApplicationFilterChain -up-|> CometFilterChain
+  ApplicationFilterConfig -up-|> FilterConfig
+  ApplicationFilterConfig -up-|> Serializable
+  ApplicationHttpRequest +-down- AttributeNamesEnumerator
+  AttributeNamesEnumerator -up-|> Enumeration
+  AprLifecycleListener -up-|> LifecycleListener
+  ContainerBase -up-|> Container
+  ContainerBase -up-|> Lifecycle
+  ContainerBase -up-|> Pipeline
+  ContainerBase -up-|> MBeanRegistration
+  ContainerBase -up-|> Serializable
+  ContainerBase +-down- PrivilegedAddChild
+  ContainerBase +-down- ContainerBackgroundProcessor
+  ContainerBase +-down- NoopAccessLog
+  PrivilegedAddChild -up-|> PrivilegedAction
+  ContainerBackgroundProcessor -up-|> Runnable
+  NoopAccessLog -up-|> AccessLog
+  DummyRequest -up-|> HttpServletRequest
+  DummyResponse -up-|> HttpServletResponse
+  JasperListener -up-|> LifecycleListener
+  JreMemoryLeakPreventionListener -up-|> LifecycleListener
+  NamingContextListener -up-|> LifecycleListener
+  NamingContextListener -up-|> ContainerListener
+  NamingContextListener -up-|> PropertyChangeListener
+  StandardContext -up-|> Context
+  StandardContext -up-|> Serializable
+  StandardContext -up-|> NotificationEmitter
+  StandardEngine -up-|> Engine
+  StandardEngine +-down- AccessLogListener
+  AccessLogListener -up-|> PropertyChangeListener
+  AccessLogListener -up-|> LifecycleListener
+  AccessLogListener -up-|> ContainerListener
+  AccessLogListener o-- StandardEngine : engine
+  StandardHost -up-|> Host
+  StandardHost +-down- MemoryLeakTrackingListener
+  MemoryLeakTrackingListener -up-|> LifecycleListener
+  StandardPipeline -up-|> Pipeline
+  StandardPipeline -up-|> Contained
+  StandardPipeline -up-|> Lifecycle
+  StandardServer -up-|> Lifecycle
+  StandardServer -up-|> Server
+  StandardServer -up-|> MBeanRegistration
+  StandardService -up-|> Lifecycle
+  StandardService -up-|> Service
+  StandardService -up-|> MBeanRegistration
+  StandardThreadExecutor -up-|> Executor
+  StandardThreadExecutor +-down- TaskQueue
+  StandardThreadExecutor +-down- TaskThreadFactory
+  TaskThreadFactory -up-|> ThreadFactory
+  StandardWrapper -up-|> ServletConfig
+  StandardWrapper -up-|> Wrapper
+  StandardWrapper -up-|> NotificationEmitter
+  StandardWrapperFacade -up-|> ServletConfig
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
